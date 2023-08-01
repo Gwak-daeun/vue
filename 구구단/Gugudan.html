@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        <div>{{first}} 곱하기 {{second}} 는?</div>
+        <!-- 중괄호로 두 번 겹쳐 감싸면 화면에 데이터를 표시할 수 있음 -->
+        <!-- v-on:submit -> 이벤트 리스너 역할 -->
+        <form v-on:submit="onSubmitForm"> 
+            <input type="number" v-model="value" ref="answer" />
+            <!-- input 태그에서 바뀌는 값을 뷰의 data로 받고싶기 때문에 뷰의 data와 input의 값을 
+            연결하기 위해(양방향 바인딩) v-model속성 사용 -->
+            <!-- <div>{{value}}</div> 뷰의 value와 input태그의 value가 연결된 것을 확인 -->
+            <button type="submit">입력</button> 
+            <!-- 아직 함수를 연결하기 전인데도 입력 버튼을 눌렀을 때 화면이 새로고침 되는 것은 
+            form 태그의 기본 기능인 post나 get요청이 있을 때마다 새로고침 되는 기능이 있기 때문이다.  -->
+        </form>
+            <div id="result">{{result}}</div>
+    </div>
+    <script>
+        const app = new Vue({
+            el: '#root',
+            data: {
+                first: Math.ceil( Math.random() * 9 ),
+                second: Math.ceil( Math.random() * 9 ),
+                value: '',
+                result: '',
+                
+
+            },
+            // 리액트는 state를 선언하고, 뷰는 data를 선언한다.
+            methods: {
+                onSubmitForm(e) {
+                    e.preventDefault(); // 이걸 설정하지 않으면 페이지가 새로고침 되는데, 뷰나 리액트 같은
+                                        //SPA는 새로고침을 막아야 하기 때문에 설정
+
+                    if(this.first * this.second === parseInt(this.value)){
+                        this.result = '정답';
+                        this.first = Math.ceil( Math.random() * 9 );
+                        this.second = Math.ceil( Math.random() * 9 ); // 답을 맞춘 경우에만 새 문제를 낸다. 
+                        this.value = '';
+                        this.$refs.answer.focus();//인풋창 선택이 해제되지 않도록 하는 코드. 
+                                                  // ref : 태그에 직접적으로 접근하기 위한 속성. 
+                                                  //input 박스는 answer라는 이름을 부여받음 
+                    } else {
+                        this.result = '땡';
+                        this.value = '';
+                        this.$refs.answer.focus();
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

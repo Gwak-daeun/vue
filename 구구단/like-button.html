@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>좋아요</title>
+</head>
+<body>
+    <div id="root">
+        <div v-if="liked">눌렀음</div>
+        <!-- v가 붙는 속성들은 다 뷰의 data나 methods에 접근할 수 있다고 생각하면 된다. -->
+        <!-- 뷰의 통제 아래에 있는 id 태그 내부 요소에 v 속성이 붙으면 뷰는 자기가 관리하면 되겠구나 라고 알아차린다. -->
+        <button v-else v-on:click="onclickButton">Like</button> 
+        <!-- v-on: 을 해야 뷰가 통제하는 메소드가 연결됨 -->
+    </div>
+</body>
+<script>
+    const app = new Vue({
+        el: '#root',
+        data :{
+            liked: false,
+        },
+        methods: {
+            onclickButton() {
+                this.liked = true; // this는 data를 가리킴
+            },
+        }
+    });
+</script>
+</html>
