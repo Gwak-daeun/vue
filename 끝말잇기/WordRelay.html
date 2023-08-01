@@ -8,22 +8,35 @@
 </head>
 <body>
     <div id='root'>
-        <div>{{word}}</div>
-        <form v-on:submit="onSubmitForm">
-            <input type="text" v-model="value" ref="answer" />
-            <button type="submit">입력!</button>
-        </form>
-        <div>{{result}}</div>
+     <word-relay start-word="제로초"></word-relay>
+     <word-relay start-word="초밥"></word-relay>
+     <word-relay start-word="바보"></word-relay>
+    
     </div>
     <script>
-        const app = new Vue({ // 뷰에게 태그 통제권을 넘긴다. 
-            el: '#root',
-            data: {
-                word: '제로초',
+        Vue.component('word-relay', { // 컴포넌트는 인스턴스 보다는 위에, 스크립트는 div#root보다는 아래에 위치해야 한다.
+            //전역 컴포넌트이다. 
+            template:`
+            <div> 
+            <div>{{word}}</div>
+                <form v-on:submit="onSubmitForm">
+                    <input type="text" v-model="value" ref="answer" />
+                    <button type="submit">입력!</button>
+                </form>
+            <div>{{result}}</div>
+            </div>
+            `, 
+            props: ['startWord'],
+            //데이터가 있는 형제 태그는 항상 감싸는 최상단의 부모 태그(<div>)가 있어야 한다. - 컴포넌트 템플릿의 규칙
+            data(){
+              return{ // 컴포넌트마다 데이터 분리를 위해 매번 새로운 객체를 만들어서 리턴
+                word: this.startWord,
                 result: '',
                 value: '',
+              };
             },
-            methods: { 
+            
+            methods: {
                 onSubmitForm(e) {
                     e.preventDefault(); 
                     if(this.word[this.word.length - 1] === this.value[0]){
@@ -36,7 +49,12 @@
                         this.value = ''; // 인풋칸 비워주기
                     }
                 }
-            },
+            }
+        });
+    </script>
+    <script>
+        const app = new Vue({ // 뷰에게 태그 통제권을 넘긴다. 뷰 인스턴스라고 한다.
+            el: '#root',
         });
     </script>
 </body>
