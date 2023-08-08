@@ -1,0 +1,29 @@
+#container {
+    float: left;
+}
+
+.moneyButtons {
+
+}
+
+.money {
+    /* float: left; */
+    margin: 10px;
+}
+
+.command {
+    border: 3px solid black;
+    width: 800px;
+    height: 200px;
+    margin-top: 50px;
+    overflow: auto;
+}
+
+#drinks {
+    margin: 10px;
+    width: 800px;
+}
+
+.yellow {
+    border: 3px solid yellow;
+}

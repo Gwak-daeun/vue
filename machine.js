@@ -1,6 +1,6 @@
 
 // function insertButtons(drinks) {
-//     let output = ""; // html용 
+//     let output = ""; 
 //     drinks.forEach(
 //         drink => {
 //             output += `
@@ -25,51 +25,56 @@ const drinks = [
     {
         "name" : "코카콜라",
         "price" : 700,
-        "stock" : 5
+        "stock" : 5,
     },
     {
         "name" : "오렌지주스",
         "price" : 1200,
-        "stock" : 5
+        "stock" : 5,
     },
     {
         "name" : "커피",
         "price" : 500,
-        "stock" : 5
+        "stock" : 5,
     },
     {
         "name" : "물",
         "price" : 700,
-        "stock" : 5
+        "stock" : 5,
     },
     {
         "name" : "옥수수 수염차",
         "price" : 1200,
-        "stock" : 5
+        "stock" : 5,
     },
     {
         "name" : "밀키스",
         "price" : 700,
-        "stock" : 5
+        "stock" : 5,
     },
     {
         "name" : "트래비",
         "price" : 1000,
-        "stock" : 5
+        "stock" : 5,
     },
+    {
+        "name" : "미에로화이바",
+        "price" : 1700,
+        "stock" : 5,
+    }
 ];
 
 let output = ""; // html용 
 
-drinks.forEach(
-    drink => {
-        output += `
-        <button name=${drink.name} value=${drink.price}> ${drink.name}(${drink.price}원, 재고수${drink.stock})</button>
-        `;
-    }
-); 
-
-drinkBox.innerHTML = output;
+    drinks.forEach(
+        drink => {
+            output += `
+            <button name=${drink.name} value=${drink.price} data-stock=${drink.stock}> ${drink.name}(${drink.price}원, 재고수${drink.stock})</button>
+            `;
+        }
+    ); 
+    
+    drinkBox.innerHTML = output;
 
 
 
@@ -106,7 +111,7 @@ insertInput.setAttribute("value", 0);
 //     }
 // );
 
-myWallet.setAttribute("value", myWalletCoin - insertMoney);
+myWallet.setAttribute("value", myWalletCoin);
 
 
 for(let i = 0; i < drinkButton.length; i++){
@@ -118,6 +123,20 @@ for(let i = 0; i < drinkButton.length; i++){
 
 [].forEach.call(machineButton, (machineButton) => { // 돈 투입
     machineButton.addEventListener("click", () => {
+
+        let myMoney = 0;
+
+        myMoney = parseInt(machineButton.value);
+
+        myWalletCoin -= myMoney;
+
+        if(myWalletCoin < 0){
+            alert("돈이 없어요!");
+            killInsertButton();
+            return;
+        }
+
+        console.log();
 
         insertMoney += parseInt(machineButton.value);
 
@@ -133,16 +152,14 @@ for(let i = 0; i < drinkButton.length; i++){
             }
         }
 
-        if(10000 - insertMoney < 100){
-            killInsertButton();
-        }
-
-        myWallet.setAttribute("value", myWalletCoin - insertMoney);
+        myWallet.setAttribute("value", myWalletCoin);
 
     }); 
 });
 
     const drinkBtn = document.querySelectorAll("#drinks > button");
+
+
 
     [].forEach.call(drinkBtn, (drinkBtn) => { // 음료 뽑기
         drinkBtn.addEventListener("click", () => {
@@ -150,6 +167,17 @@ for(let i = 0; i < drinkButton.length; i++){
         command.innerText += `${drinkBtn.name} 을/를 선택하셨습니다. 가격: ${drinkBtn.value} \n`;
 
            drinkPriceSum += parseInt(drinkBtn.value);
+
+           drinkBtn.dataset.stock -= 1;
+
+           drinkBtn.innerHTML = `<button name=${drinkBtn.name} value=${drinkBtn.value} data-stock=${drinkBtn.dataset.stock}> ${drinkBtn.name}(${drinkBtn.price}원, 재고수${drinkBtn.dataset.stock})</button>`;
+
+           drinkBtn.setAttribute("data-stock", drinkBtn.dataset.stock);
+
+           if (drinkBtn.dataset.stock <= 0) {
+            return alert(`${drinkBtn.name}의 재고가 모두 소진되었어요!`);
+           }
+          
 
            insertInput.setAttribute("value", insertMoney - drinkPriceSum);
 
