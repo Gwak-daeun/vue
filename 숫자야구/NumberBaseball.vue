@@ -30,9 +30,9 @@
         data() {
             return {
                 answer: getNumbers(), // ex) [1,5,3,4]
-                tries: [],
-                value: '',
-                result: '',
+                tries: [], // 시도 회수
+                value: '', // 입력
+                result: '', // 결과
             }
         },
         methods: {
@@ -46,9 +46,18 @@
                 this.result = '홈런';
                 alert('게임을 다시 시작합니다.');
                 this.value = '';
+                this.answer = getNumbers();
                 this.tries = [];
                 this.$refs.answer.focus();
                } else { // 틀렸으면
+                if (this.tries.length >= 10) { // 10번째 시도
+                    this.result = `10번 넘게 틀려서 실패! 답은 ${this.answer.join('')} 입니다.`
+                    alert('게임을 다시 시작합니다.');
+                    this.value = '';
+                    this.answer = getNumbers();
+                    this.tries = [];
+                    this.$refs.answer.focus();
+                }
                     let strike = 0;
                     let ball = 0;
                     const answerArray = this.value.split('').map(v => parseInt(v)); // 문자열을 숫자배열로 바꾸는 코드
