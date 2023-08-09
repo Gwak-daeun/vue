@@ -27,7 +27,8 @@ plugins: [
     new VueLoaderPlugin(),
 ],
 output: {
-    filename: '[name].js', // 또는 app.js
-    path: path.join(__dirname, 'dist'), // 폴더 안에 dist라는 폴더가 생기고, 거기에 app.js라는 최종 결과물이 나온다. 
+    filename: '[name].js', 
+    path: path.join(__dirname, 'dist'), 
+    publicPath: '/dist',
 },
 };
