@@ -1,5 +1,5 @@
 import Vue from 'vue'; // package.json에 설치한 vue를 가져옴
 
-import NumberBaseball from './ResponseCheck.vue';
+import ResponseCheck from './ResponseCheck.vue';
 
-new Vue(NumberBaseball).$mount('#root'); // 뷰 인스턴스
+new Vue(ResponseCheck).$mount('#root'); // 뷰 인스턴스

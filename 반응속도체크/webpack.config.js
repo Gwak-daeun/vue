@@ -15,6 +15,12 @@ module: { // 웹팩의 핵심
     rules: [{ // js파일들을 합칠 때 어떻게 합칠건지, 처리할 건지 rules에 적는다. 
         test: /\.vue$/,
         use: 'vue-loader'
+    }, {
+        test: /\.css$/,
+        use: [
+            'vue-style-loader',
+            'css-loader'
+        ]
     }]
 },
 plugins: [
