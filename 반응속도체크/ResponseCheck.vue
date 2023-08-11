@@ -10,6 +10,9 @@
 </template>
 
 <script>
+    let startTime = 0;
+    let entTime = 0;
+    let timeout = 0;
     export default {
         data() {
             return {
@@ -26,9 +29,10 @@
                 if(this.state === 'waiting') {
                     this.state = 'ready';
                     this.message = '초록색이 되면 클릭하세요.';
-                    setTimeout(() => {
+                  timeout = setTimeout(() => {
                     this.state = 'now';
                     this.message = "지금 클릭!";
+                    startTime.
                     }, Math.floor(Math.random()*1000), 2000); //2~3초
                 } else if(this.state === 'ready') {
                     this.state = 'waiting';
